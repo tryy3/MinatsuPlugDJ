@@ -1,0 +1,23 @@
+{
+  "name": "MinatsuPlugDJ",
+  "version": "1.0.0",
+  "description": "Plugdj bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tryy3/MinatsuPlugDJ.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tryy3/MinatsuPlugDJ/issues"
+  },
+  "homepage": "https://github.com/tryy3/MinatsuPlugDJ",
+  "dependencies": {
+    "nedb": "^1.1.1",
+    "plugapi": "^3.1.2"
+  }
+}
