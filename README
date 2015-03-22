@@ -1,2 +1,0 @@
-# MinatsuPlugDJ
-Plugdj bot
