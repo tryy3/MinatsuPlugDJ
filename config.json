@@ -1,0 +1,9 @@
+{
+    "Email": "plugdj@email.com",
+    "Password": "plugdjPassword",
+    "Room": "plugdjRoom",
+
+    "ScriptFolder": "./scripts",
+
+    "CommandPrefix": "!"
+}
