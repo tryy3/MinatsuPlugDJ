@@ -10,6 +10,6 @@ exports.push(
     "help": "Shows the uptime of the bot.",
     "function": function(args)
     {
-        uptime();
+        console.log(args);
     }
 });

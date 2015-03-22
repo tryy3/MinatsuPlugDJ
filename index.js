@@ -37,6 +37,47 @@ new PlugAPI(
         }
         else
         {
+            var argsReg = {};
+            var reg = new RegExp("^" + CONFIG.CommandPrefix + "(.+)", "m");
+            if (argsReg = reg.exec(data.message))
+            {
+                var argsSplit = argsReg[1].split(' ');
+                var args = [];
+                args[0] = data.message;
+                args[1] = [];
+                args[1][0] = data.raw.un;
+                args[1][1] = data.raw.uid;
+                args[2] = argsSplit[0];
+                argsSplit.shift();
+                args[3] = argsSplit.length <= 0 ? null : argsSplit;
+
+                plugins.find(
+                {
+                    $or: [
+                        {
+                            cmd: args[2]
+                        },
+                        {
+                            aliases: args[2]
+                        }
+                    ]
+                }, function(err, docs)
+                {
+                    if (err) throw err;
+                    if (docs.length > 1)
+                    {
+                        //Too many commands found!
+                    }
+                    else if (docs.length < 1)
+                    {
+                        //Command is not found!
+                    }
+                    else
+                    {
+                        pluginFunctions[docs[0]._id](args);
+                    }
+                });
+            }
             console.log("Plug.DJ: " + data.from + " => " + data.message);
         }
     });
