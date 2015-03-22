@@ -2,14 +2,15 @@ var PlugAPI = require('plugapi');
 var fs = require('fs');
 var _ = require('underscore');
 var DataStore = require('nedb');
-var test;
+
+var pluginFunctions = {};
 
 var CONFIG = require('./config.json');
 var plugins = new DataStore(
 {
     inMemoryOnly: true,
     autoload: true
-})
+});
 
 new PlugAPI(
 {
@@ -17,11 +18,10 @@ new PlugAPI(
     "password": CONFIG.Password
 }, function(minatsu)
 {
-    var bot = minatsu;
     var reconnect = function()
     {
         minatsu.connect(CONFIG.Room);
-    }
+    };
     minatsu.connect(CONFIG.Room);
 
     minatsu.on('roomJoin', function(room)
@@ -39,10 +39,10 @@ new PlugAPI(
         {
             console.log("Plug.DJ: " + data.from + " => " + data.message);
         }
-    })
+    });
 
-    minatsu.on('error', reconnect)
-    minatsu.on('close', reconnect)
+    minatsu.on('error', reconnect);
+    minatsu.on('close', reconnect);
 });
 
 var loadPlugins = function(cb)
@@ -53,7 +53,7 @@ var loadPlugins = function(cb)
 
         files.forEach(function(v, j)
         {
-            var reg = /.+(\.js)$/m
+            var reg = /.+(\.js)$/m;
 
             if (reg.test(v))
             {
@@ -63,19 +63,17 @@ var loadPlugins = function(cb)
                 pl_keys.forEach(function(name, key)
                 {
                     var cpl = pl[name];
-                    console.log(cpl);
+                    var func = cpl.function;
+                    delete cpl.function;
                     plugins.insert(pl, function(err, newdoc)
                     {
-                        plugins.find(
-                        {}, function(err, docs)
-                        {
-                            console.log(docs);
-                        })
-                    })
-                })
+                        if (err) throw err;
+                        pluginFunctions[newdoc[0]._id] = func;
+                    });
+                });
             }
-        })
-    })
-}
+        });
+    });
+};
 
 loadPlugins();

@@ -12,4 +12,4 @@ exports.push(
     {
         say(args[1]);
     }
-})
+});
